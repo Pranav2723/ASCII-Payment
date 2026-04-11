@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<title>Computer Department Fresher & Farewell Fund 2025-26</title>
+
+<!-- PWA & Cross-Platform Meta Tags -->
+<meta name="theme-color" content="#0d0f14"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Farewell Fund"/>
+<link rel="apple-touch-icon" href="images/QR.jpeg"/> <!-- Fallback icon, ideally you need a square logo -->
+
+
+<link rel="stylesheet" href="style.css"/>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="badge">★ Computer Department Fresher & Farewell 2025-26</div>
+    <h1>Computer Department <br/><span>Fresher & Farewell Fund</span></h1>
+    <p class="subtitle">Register and contribute ₹500 to make our farewell celebration a memory that lasts forever.</p>
+  </div>
+
+  <!-- Fixed Amount Banner -->
+  <div class="amount-banner">
+    <div>
+      <div class="lbl">Contribution Amount</div>
+      <div class="val">₹500</div>
+      <span class="fixed-tag">FIXED · PER STUDENT</span>
+    </div>
+    <div class="coin">₹</div>
+  </div>
+
+  <!-- Form -->
+  <div class="card">
+    <div class="card-label">Your Details</div>
+
+    <div class="field" id="f-name">
+      <label class="field-label">Full Name *</label>
+      <input type="text" id="donor-name" placeholder="Enter your full name"/>
+      <div class="err">Please enter your name</div>
+    </div>
+
+    <div class="input-row">
+      <div class="field" id="f-year">
+        <label class="field-label">Year / Class *</label>
+        <select id="donor-year">
+          <option value="" disabled selected>Select year</option>
+          <option value="FE">FE</option>
+          <option value="SE-A">SE-A</option>
+          <option value="SE-B">SE-B</option>
+          <option value="TE">TE</option>
+          <option value="BE">BE</option>
+        </select>
+        <div class="err">Please select your year</div>
+      </div>
+      <div class="field" id="f-roll">
+        <label class="field-label">Roll Number *</label>
+        <input type="text" id="donor-roll" placeholder="Roll No." maxlength="10"/>
+        <div class="err">Please enter roll number (e.g. A21)</div>
+      </div>
+    </div>
+
+    <div class="input-row">
+      <div class="field" id="f-mobile">
+        <label class="field-label">Mobile Number *</label>
+        <input type="tel" id="donor-mobile" placeholder="10-digit number" maxlength="10"/>
+        <div class="err">Enter valid 10-digit number</div>
+      </div>
+      <div class="field" id="f-email">
+        <label class="field-label">Email Address *</label>
+        <input type="email" id="donor-email" placeholder="yourname@example.com"/>
+        <div class="err">Please enter a valid email</div>
+      </div>
+    </div>
+
+    <div class="field" id="f-gender">
+      <label class="field-label">Gender *</label>
+      <div class="gender-row">
+        <div class="gpill" data-g="Male">Male</div>
+        <div class="gpill" data-g="Female">Female</div>
+        <div class="gpill" data-g="Other">Other</div>
+      </div>
+      <div class="err gender-err" id="gender-err">Please select your gender</div>
+    </div>
+
+    <div class="field" id="f-payment-method">
+      <label class="field-label">Payment Method *</label>
+      <div class="gender-row" style="grid-template-columns: 1fr 1fr;">
+        <div class="pm-pill" data-pm="Offline">Offline (Cash to Admin)</div>
+        <div class="pm-pill" data-pm="Online">Online (UPI / Bank)</div>
+      </div>
+      <div class="err pm-err" id="pm-err" style="display:none; color: var(--danger); font-size: 12px; margin-top: 5px;">Please select a payment method</div>
+    </div>
+
+    <!-- Hidden by default, shown if Online -->
+    <div id="online-payment-details" style="display: none; background: rgba(245,200,66,0.05); padding: 15px; border-radius: 12px; border: 1px solid rgba(245,200,66,0.15); margin-bottom: 1rem;">
+      
+      <!-- QR Code Section -->
+      <div class="qr-container" style="text-align: center; margin-bottom: 20px; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 10px; border: 1px dashed rgba(245,200,66,0.3);">
+        <p style="font-size: 14px; font-weight: 600; color: #f5c842; margin-bottom: 10px;">Scan QR Code to Pay ₹500</p>
+        <img src="images/QR.jpeg" alt="Payment QR Code" id="payment-qr-image" style="max-width: 180px; width: 100%; height: auto; border-radius: 10px; border: 3px solid #f5c842; padding: 5px; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
+        
+        <div style="margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+          <span style="font-size: 16px; font-weight: 600; color: #fff; font-family: monospace;" id="upi-number">7028460221</span>
+          <button type="button" onclick="navigator.clipboard.writeText('7028460221'); this.innerText='Copied!'; setTimeout(() => this.innerText='Copy', 2000);" style="background: #f5c842; color: #111; border: none; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s;">Copy</button>
+        </div>
+
+        <p style="font-size: 12px; color: #aaa; margin-top: 10px;">Please take a screenshot after successful payment.</p>
+      </div>
+
+      <div class="field" id="f-txn-id">
+        <label class="field-label">Transaction ID / UTR *</label>
+        <input type="text" id="txn-id" placeholder="Enter 12-digit UTR or Transaction ID"/>
+        <div class="err" id="txn-err" style="display:none; color: var(--danger); font-size: 12px; margin-top: 5px;">Please enter the transaction ID</div>
+      </div>
+      <div class="field" id="f-screenshot">
+        <label class="field-label">Upload Payment Screenshot *</label>
+        <input type="file" id="payment-screenshot" accept="image/*" style="padding: 8px; background: #fff; border-radius: 8px; cursor: pointer; color: #111;"/>
+        <div class="err" id="screen-err" style="display:none; color: var(--danger); font-size: 12px; margin-top: 5px;">Please upload the payment screenshot</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <button class="btn-pay" id="submit-btn" onclick="submitRegistration()">Submit Registration Request →</button>
+    <button class="btn-outline" onclick="openStatusModal()" style="width: 100%; margin-top: 15px; padding: 14px; border-radius: 12px; font-weight: 700; color: #f5c842; border: 2px solid rgba(245,200,66,0.3); background: rgba(245,200,66,0.08); cursor: pointer; transition: all 0.2s;">Check Status / Download Receipt</button>
+
+    <div class="trust">
+      <div class="trust-item"><span class="trust-dot" style="background:var(--accent);"></span> Admin Approval</div>
+      <div class="trust-item"><span class="trust-dot"></span> Email Notification</div>
+      <div class="trust-item"><span class="trust-dot" style="background:var(--success);"></span> Secure Data</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Success Overlay -->
+<div id="success-overlay" class="overlay" style="display: none; position: fixed; inset: 0; background: rgba(13,15,20,0.92); z-index: 100; overflow-y: auto; padding: 2rem 1rem;">
+  <div class="upi-card" style="background: #fff; color: #111; border-radius: 16px; width: 100%; max-width: 400px; padding: 2rem; position: relative; margin: auto; text-align: center;">
+    <button class="close-btn" onclick="closeSuccessModal()" style="position: absolute; top: 16px; right: 16px; background: #f0f0f0; border: none; border-radius: 50%; width: 28px; height: 28px; cursor: pointer;">✕</button>
+    <h2 style="font-family: 'DM Sans', sans-serif; font-size: 20px; margin-bottom: 8px;">Request Submitted!</h2>
+    <p class="upi-subtitle" style="font-size: 13px; color: #666; margin-bottom: 15px; font-weight: 500;">Your registration request has been submitted successfully.</p>
+    
+    <div style="background: #eaf7f0; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #a8e6cc;">
+      <p style="font-size: 14px; font-weight: 600; color: #1a7d4f;">Waiting for Approval</p>
+      <p style="font-size: 12px; color: #333; margin-top: 5px;">An admin will review and approve your request. You will receive an email containing the receipt once approved.</p>
+    </div>
+
+    <div class="upi-confirm-section" style="text-align: center;">
+      <button class="btn-pay" onclick="closeSuccessModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Check Status Overlay -->
+<div id="check-status-overlay" class="overlay" style="display: none; position: fixed; inset: 0; background: rgba(13,15,20,0.92); z-index: 100; overflow-y: auto; padding: 2rem 1rem;">
+  <div class="upi-card" style="background: #fff; color: #111; border-radius: 16px; width: 100%; max-width: 400px; padding: 2rem; position: relative; margin: auto; text-align: center;">
+    <button class="close-btn" onclick="closeStatusModal()" style="position: absolute; top: 16px; right: 16px; background: #f0f0f0; border: none; border-radius: 50%; width: 28px; height: 28px; cursor: pointer;">✕</button>
+    <h2 style="font-family: 'DM Sans', sans-serif; font-size: 20px; margin-bottom: 8px;">Check Registration Status</h2>
+    <p class="upi-subtitle" style="font-size: 13px; color: #666; margin-bottom: 15px; font-weight: 500;">Enter your registered Mobile Number.</p>
+    
+    <div style="margin-bottom: 15px; text-align: left;">
+        <input type="tel" id="check-mobile" placeholder="10-digit mobile number" maxlength="10" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ccc; font-size: 15px; background: #fafafa; color: #333; outline: none;" />
+    </div>
+
+    <div id="status-message" style="margin-bottom: 15px; font-size: 14px; font-weight: 500; display: none;"></div>
+
+    <div class="upi-confirm-section" style="text-align: center;">
+      <button class="btn-pay" id="check-status-btn" onclick="checkStatus()">Check Status</button>
+    </div>
+  </div>
+</div>
+
+<!-- Receipt Overlay -->
+<div id="receipt-overlay" class="overlay" style="display: none; position: fixed; inset: 0; background: rgba(13,15,20,0.92); z-index: 100; overflow-y: auto; padding: 2rem 1rem;">
+  <div class="receipt-card" id="print-area" style="background: #fff; color: #111; border-radius: 16px; width: 100%; max-width: 460px; padding: 2rem; position: relative; margin: auto;">
+    <button class="close-btn" onclick="closeReceipt()" style="position: absolute; top: 16px; right: 16px; background: #f0f0f0; border: none; border-radius: 50%; width: 28px; height: 28px; cursor: pointer;">✕</button>
+    <div class="receipt-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+      <div class="receipt-logo" style="font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; color: #111; line-height: 1.3;">
+        CS Dept Farewell 2025-26
+        <small style="font-size: 10px; color: #777; display: block; font-weight: 400;">Computer Department · Batch 2025-26</small>
+      </div>
+      <div class="receipt-badge" style="background: #eaf7f0; color: #1a7d4f; border: 1px solid #a8e6cc; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 100px; font-family: 'Space Mono', monospace;">APPROVED ✓</div>
+    </div>
+    <div class="receipt-amount-big" style="text-align: center; margin: 1.5rem 0; padding: 1.25rem; background: #fafafa; border-radius: 12px; border: 1px solid #eee;">
+      <div class="albl" style="font-size: 12px; color: #888; margin-bottom: 6px;">Amount Paid</div>
+      <div class="aval" style="font-family: 'Space Mono', monospace; font-size: 2rem; font-weight: 700; color: #111;">₹500</div>
+    </div>
+    <div class="receipt-rows" style="font-size: 13px;">
+      <table style="width: 100%; border-collapse: collapse;">
+        <tr><td style="padding: 7px 0; color: #888; width: 46%;">Receipt No.</td><td id="r-receipt-no" style="padding: 7px 0; font-weight: 500; text-align: right;">—</td></tr>
+        <tr><td style="padding: 7px 0; color: #888;">Date &amp; Time</td><td id="r-date" style="padding: 7px 0; font-weight: 500; text-align: right;">—</td></tr>
+        <tr><td style="padding: 7px 0; color: #888;">Name</td><td id="r-name" style="padding: 7px 0; font-weight: 500; text-align: right;">—</td></tr>
+        <tr><td style="padding: 7px 0; color: #888;">Year / Class</td><td id="r-year" style="padding: 7px 0; font-weight: 500; text-align: right;">—</td></tr>
+        <tr><td style="padding: 7px 0; color: #888;">Roll Number</td><td id="r-roll" style="padding: 7px 0; font-weight: 500; text-align: right;">—</td></tr>
+        <tr><td style="padding: 7px 0; color: #888;">Gender</td><td id="r-gender" style="padding: 7px 0; font-weight: 500; text-align: right;">—</td></tr>
+        <tr><td style="padding: 7px 0; color: #888;">Mobile</td><td id="r-mobile" style="padding: 7px 0; font-weight: 500; text-align: right;">—</td></tr>
+        <tr><td style="padding: 7px 0; color: #888;">Email</td><td id="r-email" style="padding: 7px 0; font-weight: 500; text-align: right;">—</td></tr>
+      </table>
+    </div>
+    
+    <div style="text-align: center; margin-top: 1.5rem;">
+      <img id="r-qr-code" src="" alt="Student QR Code" style="width: 100px; height: 100px; border-radius: 8px; border: 1px solid #ddd; padding: 4px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.05);" />
+      <div style="font-size: 10px; color: #888; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Authentic Ticket</div>
+    </div>
+
+    <div class="r-divider" style="height: 1px; background: #eee; margin: 1rem 0;"></div>
+    <div class="receipt-footer" style="text-align: center; font-size: 11px; color: #aaa; margin-top: 1.25rem; line-height: 1.6;">
+      Thank you for contributing to the CS Farewell 2025-26!<br/>
+      This is your official payment receipt. Keep it for your records.
+    </div>
+    <div class="receipt-actions" style="margin-top: 1.25rem; text-align: center;">
+      <button class="btn-primary-sm" onclick="printReceipt()" style="width: 100%; padding: 11px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; background: #111; color: #fff;">Print / Save PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast">✓ Success!</div>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
